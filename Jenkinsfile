@@ -9,8 +9,7 @@ pipeline {
         
         stage('Test'){        
         steps {
-                sh 
-                '''
+                sh '''
                     pip3 install -r requirements.txt
                     ./tests
                     pytest
@@ -19,18 +18,19 @@ pipeline {
           }
         }
 
-        stage('Code quality'){  
+        stage('Code quality'){ 
+        steps {
             withCredentials([[credentialsId: 'sonar_id']]) {
             withSonarQubeEnv('SonarQube') {    
                 mvn "-Dsonar.projectKey=projet_final -Dsonar.sources=."
                 }
             }
+           }
           }
 
         stage('Store Artefact'){        
         steps {
-                sh 
-                '''
+                sh '''
                     rm -f /var/jenkins_home/workspace/*.tar.gz
                     tar -cf /var/jenkins_home/workspace/archive$BUILD_NUMBER.tar.gz /var/jenkins_home/workspace/Projet_CI
                     ls /var/jenkins_home/workspace/
