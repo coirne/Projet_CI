@@ -3,7 +3,7 @@ pipeline {
     stages {
         stage('Clone Git repo') {
         steps {
-            git branch: 'main', url: 'https://github.com/coirne/Projet_final_test_flask.git'
+            git branch: 'main', url: 'https://github.com/coirne/Projet_CI.git'
               }
         }
         
